@@ -20,22 +20,23 @@ class Car {
 
     steer(degrees) {
         const radians = (Math.PI / 180) * degrees
-        this.heading = radians
+        this.heading += radians
     }
 
     render() {
+        this.ctx.strokeStyle = "red";
         const main_vector =  math.matrix([this.length/2, 0]);
         const center_pos = math.matrix([this.center_mass_pos_x, this.center_mass_pos_y])
         
         const rotate_matrix = math.matrix([[math.cos(this.heading), -math.sin(this.heading)],[math.sin(this.heading), math.cos(this.heading)]])
         
         // Multiplication
-        const productMatrix = math.multiply(main_vector, rotate_matrix);
+        const productMatrix = math.multiply(rotate_matrix, main_vector);
         const result = math.add(center_pos, productMatrix)
-        console.log(result[0], result[1])
         this.ctx.beginPath();
         this.ctx.moveTo(this.center_mass_pos_x, this.center_mass_pos_y);
-        this.ctx.lineTo(result[0], result[1])
+        this.ctx.lineTo(result._data[0], result._data[1])
+        this.ctx.stroke()
     }
   
   
