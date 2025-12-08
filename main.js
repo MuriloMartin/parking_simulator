@@ -1,41 +1,23 @@
 import Car from './car.js'
+import Input from './input.js';
+import Particle from './particle.js';
 
-const game = document.getElementById("game-layer")
-
-const ctx_game = game.getContext("2d");
-
-const car = new Car(300, 300, 0, 0, 0, ctx_game);
-
-
-
-
-
-
-
-function draw() {
-    
-    ctx_game.clearRect(0,0,game.width, game.height)
-    
-    car.render()
-    window.requestAnimationFrame(draw);
-  }
 
 
 function main() {
-    window.requestAnimationFrame(draw);
+    let time = new Date().getTime()
+    ctx_game.clearRect(0,0,game.width, game.height)
+    particle.update(time, input.keys)
+    particle.render()
+    window.requestAnimationFrame(main);
 }
 
-document.addEventListener("keydown", (key)=>{
 
-    if (key.key == 'ArrowRight'){
-        car.steer(25)
-    }
-    if (key.key == 'ArrowLeft'){
-        car.steer(-25)
-    }
-    
-})
 
+const game = document.getElementById("game-layer")
+const ctx_game = game.getContext("2d");
+const particle = new Particle(ctx_game);
+const input = new Input()
 main()
 
 
