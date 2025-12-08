@@ -7,12 +7,12 @@ export default class Particle{
         this.vY = 0
         this.rollingEficiency = 0.98
         this.pixelToMetersRatio = 10
-        this.last_update_time = new Date().getTime()
+        this.lastUpdateTime = new Date().getTime()
     }
 
     update(time, keys) {
         //seconds
-        const step = (time - this.last_update_time) / 1000
+        const step = (time - this.lastUpdateTime) / 1000
         this.x = this.x + (this.vX * step) * this.pixelToMetersRatio
         this.vX = this.rollingEficiency*this.vX
 
@@ -23,7 +23,7 @@ export default class Particle{
             this.vX -= 2.5    
         }
 
-        this.last_update_time = time
+        this.lastUpdateTime = time
     }
 
     render() {
