@@ -4,13 +4,11 @@ export default class Wheel{
         this.x = 480
         this.y = 615
         this.absVelocity = 0
-        this.vX = 0 // m/s
-        this.vY = 0
         this.pixelToMetersRatio = 10
         this.lastUpdateTime = new Date().getTime()
-        this.heading = 0
         this.steeringAngle = 0
-        this.wheelbase = 0
+        this.heading = 0
+        this.wheelbase = 2.5
         this.scalarSpeed = 0
 
     }
@@ -20,6 +18,7 @@ export default class Wheel{
         const step = (time - this.lastUpdateTime) / 1000
         let engineAcceleration = 0
         let brakeAcceleration = 0
+        let steeringRate = 0
         let dragCoeficient = 0.2
 
         if (keys.includes('w')) {
@@ -30,27 +29,37 @@ export default class Wheel{
             brakeAcceleration = this.scalarSpeed > 0 ? 20 : 0 
         }
 
+        if (keys.includes('ArrowLeft')) {
+            steeringRate = Math.PI / 10
+        }
+        if (keys.includes('ArrowRight')) {
+            steeringRate = -Math.PI / 10
+        }
+
+        this.steeringAngle += steeringRate * step
+
+        if (this.steeringAngle > Math.PI / 6){
+            this.steeringAngle = Math.PI / 6
+        }
+
+         if (this.steeringAngle < -Math.PI / 6){
+            this.steeringAngle = -Math.PI / 6
+        }
 
         let dragAcceleration = dragCoeficient * this.scalarSpeed
 
         let resultingAcceleration = engineAcceleration - brakeAcceleration - dragAcceleration
         this.scalarSpeed = this.scalarSpeed + resultingAcceleration * step
 
-        // if (keys.includes('ArrowLeft')) {
-        //     this.heading += Math.PI / 32
-        // }
-        // if (keys.includes('ArrowRight')) {
-        //     this.heading -= Math.PI / 32  
-        // }
-
+        let deltaHeading = this.scalarSpeed / this.wheelbase *  Math.tan(this.steeringAngle)
         
-        this.vX = Math.cos(this.heading) * this.scalarSpeed
-        this.vY = Math.sin(this.heading) * this.scalarSpeed
+        this.heading += deltaHeading * step
 
-        this.x = this.x + (this.vX * step) * this.pixelToMetersRatio
-        this.y = this.y + (this.vY * step) * this.pixelToMetersRatio
+        let vX = Math.cos(this.heading) * this.scalarSpeed
+        let vY = Math.sin(this.heading) * this.scalarSpeed
 
-        // this.absVelocity = this.rollingEficiency*this.absVelocity
+        this.x = this.x + (vX * step) * this.pixelToMetersRatio
+        this.y = this.y + (vY * step) * this.pixelToMetersRatio
 
         this.lastUpdateTime = time
     }
