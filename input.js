@@ -2,12 +2,11 @@ export default class Input {
     constructor() {
         this.keys = []  
         window.addEventListener('keydown', e => {
-            console.log(this.keys)
-            console.log(e.key)
             if (
                 (e.key == 'w' ||
                 e.key == 'ArrowLeft' ||
                 e.key == 'ArrowRight' ||
+                e.key == 'k' ||
                 e.key == 's') &&
                 this.keys.indexOf(e.key) == -1
             ) {
@@ -20,6 +19,7 @@ export default class Input {
                 (e.key == 'w' ||
                 e.key == 'ArrowLeft' ||
                 e.key == 'ArrowRight' ||
+                e.key == 'k' ||
                 e.key == 's')
             ) {
                 this.keys.splice(this.keys.indexOf(e.key), 1)
