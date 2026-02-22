@@ -26,7 +26,6 @@ export default class Wheel{
             engineAcceleration = 10 // m/s²
         }
 
-        console.log(keys)
         if (keys.includes('k')) {
             brakeAcceleration = this.scalarSpeed > 0 ? 20 : 0 
         }
@@ -35,7 +34,6 @@ export default class Wheel{
         let dragAcceleration = dragCoeficient * this.scalarSpeed
 
         let resultingAcceleration = engineAcceleration - brakeAcceleration - dragAcceleration
-        console.log("resultingacceleration", resultingAcceleration)
         this.scalarSpeed = this.scalarSpeed + resultingAcceleration * step
 
         // if (keys.includes('ArrowLeft')) {
