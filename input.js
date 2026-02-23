@@ -6,7 +6,7 @@ export default class Input {
                 (e.key == 'w' ||
                 e.key == 'ArrowLeft' ||
                 e.key == 'ArrowRight' ||
-                e.key == 'k' ||
+                e.key == 'spacebar' ||
                 e.key == 's') &&
                 this.keys.indexOf(e.key) == -1
             ) {
@@ -19,7 +19,7 @@ export default class Input {
                 (e.key == 'w' ||
                 e.key == 'ArrowLeft' ||
                 e.key == 'ArrowRight' ||
-                e.key == 'k' ||
+                e.key == 'spacebar' ||
                 e.key == 's')
             ) {
                 this.keys.splice(this.keys.indexOf(e.key), 1)
